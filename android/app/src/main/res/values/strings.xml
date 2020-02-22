@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">icons</string>
+<!--   tu zmieniam nazwe aplikacji -->
+    <string name="app_name">Calorie Counter</string>
 </resources>

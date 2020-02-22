@@ -11,10 +11,17 @@ const SummaryNavigator = createStackNavigator();
 
 export const SummaryStack = () => {
   return (
-    <SummaryNavigator.Navigator>
+    <SummaryNavigator.Navigator  >
       <SummaryNavigator.Screen
-        name="Home"
+        name="Summary"
         component={SummaryScreen}
+        options={{
+          headerTitleAlign:'left',
+          headerTitle: () => {
+            return (<View style={{flex:1}}><Text>text custom header</Text></View>)
+          }
+        }}
+
       />
     </SummaryNavigator.Navigator>
   );
@@ -53,6 +60,7 @@ export const MainDrawerNavigator = () => {
 
   return (
     <DrawerNavigator.Navigator
+
       initialRouteName="Summary"
       // screenOption={{}}
       drawerPosition="right"
