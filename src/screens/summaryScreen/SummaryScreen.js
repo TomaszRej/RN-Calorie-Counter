@@ -1,15 +1,43 @@
-import React from 'react';
-import {View} from 'react-native';
+import React, {useState} from 'react';
+import {View, Button} from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Text} from 'src/components/Text/Text'
+import {Text} from 'src/components/text/Text';
+import Nutrient from 'src/components/nutrient/Nutrient';
+import ProgressBar from 'src/components/progressBar/ProgressBar';
+import GradientProgressBar from 'src/components/circularProgressBar/GradientProgressBar'
+
+
 const SummaryScreen = () => {
+
+  const [percentage, setPercentage] = useState(10);
+
+
   return (
     <View>
-      <Text weight={"bold"} size={'h1'}>Summary screen</Text>
-      <Text align={"center"} textType={"italic"} >Summary screen</Text>
-      <Icon name="dots-vertical" size={30} color="red" />
+      <Text weight={'bold'} size={'h1'}>Summary screen</Text>
+      <Text align={'center'} textType={'italic'}>Summary screen</Text>
+      <Icon name="dots-vertical" size={30} color="red"/>
+
+
+      <Button title={'add 10'} onPress={() => setPercentage(p => p + 10)}/>
+
+      <ProgressBar progress={percentage} />
+      <GradientProgressBar percentage={percentage}/>
+
     </View>
   );
 };
 
+
+const styles = EStyleSheet.create({
+  test: {
+    height: 10,
+    width: 200,
+    backgroundColor: '$progressBarDark',
+  },
+});
+
 export default SummaryScreen;
+
+

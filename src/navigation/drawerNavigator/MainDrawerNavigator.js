@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Button, SafeAreaView} from 'react-native';
+import {View, Text, Button, SafeAreaView, TouchableOpacity} from 'react-native';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import {createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem} from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -11,16 +11,23 @@ const SummaryNavigator = createStackNavigator();
 
 export const SummaryStack = () => {
   return (
-    <SummaryNavigator.Navigator  >
+    <SummaryNavigator.Navigator  screenOptions={{
+      header: (props) => {
+
+        debugger
+        return (<SafeAreaView>
+          <View  style={{padding: 10,borderWidth:3,borderColor: 'blue', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+            <View><Text>{props.scene.route.name}</Text></View>
+            <TouchableOpacity onPress={() => props.scene.descriptor.navigation.openDrawer()}><Icon name='menu' size={24} color={'red'}/></TouchableOpacity>
+          </View>
+        </SafeAreaView>)
+      }
+    }}>
       <SummaryNavigator.Screen
         name="Summary"
         component={SummaryScreen}
-        options={{
-          headerTitleAlign:'left',
-          headerTitle: () => {
-            return (<View style={{flex:1}}><Text>text custom header</Text></View>)
-          }
-        }}
+
+        // options={}
 
       />
     </SummaryNavigator.Navigator>
@@ -44,7 +51,7 @@ function CustomDrawerContent(props) {
         // icon={() => }
         label={      ({ focused}) => <View style={{flexDirection: 'row', width: '85%',justifyContent: 'space-between', alignItems: 'center'}}>
           <View><Text>Summary</Text></View>
-          <View><Icon name="chevron-right" size={30} color="blue" /></View>
+          <View ><Icon name="chevron-right" size={30} color="blue" /></View>
         </View>}
 
 
