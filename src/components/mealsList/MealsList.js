@@ -6,55 +6,74 @@ import Animated, {Value, timing, Easing, concat} from 'react-native-reanimated';
 const data = [{id: 1, mealTitle: 'Breakfaast', totalCalories: 300}, {id: 2, mealTitle: 'Dinner', totalCalories: 500}];
 
 
-
 class MealsList extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       showIngredients: 0,
-      anim: new Value(0)
+      anim: new Value(0),
+      animValues: {},
+
+    };
+  }
+
+  componentDidMount(){
+
+    let animValues = {};
+
+    for(const item of data ){
+      animValues[item.id] =  new Value(0)
     }
+
+
+    this.setState({
+      animValues: animValues
+    });
   }
 
   handleOnPress = (item) => {
-    console.log(this.state.showIngredients, item.id)
+    console.log(this.state.showIngredients, item.id);
 
 
-    if(this.state.showIngredients == item.id){
+    if (this.state.showIngredients == item.id) {
       this.setState({showIngredients: 0}, () => {
-        this.animationUp()
+        this.animationUp(item.id);
       });
 
-      return
+      return;
     }
-    this.setState({showIngredients: item.id},() => {
-      this.animationDown();
+    this.setState({showIngredients: item.id}, () => {
+      this.animationDown(item.id);
     });
 
 
   };
 
-  animationDown() {
+  animationDown(id) {
     this._config = {
       duration: 500,
       toValue: 100,
       easing: Easing.inOut(Easing.ease),
     };
 
-    timing(this.state.anim, this._config).start();
+    timing(this.state.animValues[id], this._config).start();
   }
-  animationUp() {
+
+  animationUp(id) {
     this._config = {
       duration: 500,
       toValue: 0,
       easing: Easing.inOut(Easing.ease),
     };
 
-    timing(this.state.anim, this._config).start();
+    timing(this.state.animValues[id], this._config).start();
   }
 
   renderItem = ({item}) => {
+
+console.log(this.state.animValues[item.id]);
+
 
     return <>
       <TouchableOpacity onPress={() => this.handleOnPress(item)}>
@@ -62,9 +81,8 @@ class MealsList extends React.Component {
       </TouchableOpacity>
 
 
-        <Animated.View style={{backgroundColor: 'pink', height:  concat(this.state.anim, '%')}}>
-          <Text>this.state.showIngredients {item.id}</Text></Animated.View>
-
+      <Animated.View style={{backgroundColor: 'pink', height: concat(this.state.animValues[item.id], '%')}}>
+        <Text>this.state.showIngredients {item.id}</Text></Animated.View>
 
 
     </>
