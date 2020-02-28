@@ -8,6 +8,7 @@ import ProgressBar from 'src/components/progressBar/ProgressBar';
 import GradientProgressBar from 'src/components/circularProgressBar/GradientProgressBar'
 
 import MealsList from "src/components/mealsList/MealsList";
+import TestComponent from "src/components/testComponent/testComponent"
 
 
 const SummaryScreen = () => {
@@ -16,17 +17,16 @@ const SummaryScreen = () => {
 
 
   return (
-    <View>
+    <View >
       <Button title={'add +10'} onPress={() => setPercentage(p => p + 10)}/>
 
-
+      <TestComponent message='info'></TestComponent>
       {/*<Text weight={'bold'} size={'h1'}>Summary screen</Text>*/}
       {/*<Text align={'center'} textType={'italic'}>Summary screen</Text>*/}
       {/*<Icon name="dots-vertical" size={30} color="red"/>*/}
 
 
       <MealsList/>
-
 
       {/*<ProgressBar progress={percentage} />*/}
       {/*<GradientProgressBar percentage={percentage}/>*/}
@@ -37,6 +37,11 @@ const SummaryScreen = () => {
 
 
 const styles = EStyleSheet.create({
+  container:{
+    flex:1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   test: {
     height: 10,
     width: 200,

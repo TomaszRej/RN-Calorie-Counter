@@ -11,11 +11,13 @@ const SummaryNavigator = createStackNavigator();
 
 export const SummaryStack = () => {
   return (
-    <SummaryNavigator.Navigator  screenOptions={{
+    <SummaryNavigator.Navigator  
+      screenOptions={{
       header: (props) => {
 
         debugger
-        return (<SafeAreaView>
+        return (
+        <SafeAreaView>
           <View  style={{padding: 10,borderWidth:3,borderColor: 'blue', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
             <View><Text>{props.scene.route.name}</Text></View>
             <TouchableOpacity onPress={() => props.scene.descriptor.navigation.openDrawer()}><Icon name='menu' size={24} color={'red'}/></TouchableOpacity>
