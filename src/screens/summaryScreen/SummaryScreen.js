@@ -17,7 +17,7 @@ const SummaryScreen = () => {
 
 
   return (
-    <View>
+    <View >
       <Button title={'add +10'} onPress={() => setPercentage(p => p + 10)}/>
 
 
@@ -31,7 +31,6 @@ const SummaryScreen = () => {
       </View>
 
       <MealsList/>
-
       {/*<GradientProgressBar percentage={percentage}/>*/}
 
     </View>
@@ -44,6 +43,7 @@ const styles = EStyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'white'
   },
   test: {
     height: 10,
