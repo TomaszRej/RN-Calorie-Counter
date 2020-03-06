@@ -2,41 +2,12 @@ import React from 'react';
 import {View, Text, Button, SafeAreaView, TouchableOpacity} from 'react-native';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import {createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem} from '@react-navigation/drawer';
-import {createStackNavigator} from '@react-navigation/stack';
 
-import SummaryScreen from 'src/screens/summaryScreen/SummaryScreen';
+import Screens from "src/navigation/screens";
+import SummaryStack from "src/navigation/summaryStackNavigator/SummaryStackNavigator";
 
 
-const SummaryNavigator = createStackNavigator();
 
-export const SummaryStack = () => {
-  return (
-    <SummaryNavigator.Navigator  
-      screenOptions={{
-      header: (props) => {
-
-        debugger
-        return (
-        <SafeAreaView>
-          <View  style={{padding: 10,borderWidth:3,borderColor: 'blue', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-            <View><Text>{props.scene.route.name}</Text></View>
-            <TouchableOpacity onPress={() => props.scene.descriptor.navigation.openDrawer()}><Icon name='menu' size={24} color={'red'}/></TouchableOpacity>
-          </View>
-        </SafeAreaView>)
-      }
-    }}>
-      <SummaryNavigator.Screen
-        name="Summary"
-        component={SummaryScreen}
-
-        // options={}
-
-      />
-    </SummaryNavigator.Navigator>
-  );
-};
-
-// DRAWER NAVIGATOR
 
 const DrawerNavigator = createDrawerNavigator();
 
@@ -70,7 +41,7 @@ export const MainDrawerNavigator = () => {
   return (
     <DrawerNavigator.Navigator
 
-      initialRouteName="Summary"
+      initialRouteName={Screens.SUMMARY}
       // screenOption={{}}
       drawerPosition="right"
       drawerStyle={{
@@ -83,7 +54,7 @@ export const MainDrawerNavigator = () => {
 
     >
       < DrawerNavigator.Screen
-        name='Summary'
+        name={Screens.SUMMARY}
         component={SummaryStack}
       />
     </DrawerNavigator.Navigator>

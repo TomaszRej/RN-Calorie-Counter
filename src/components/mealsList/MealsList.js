@@ -93,7 +93,7 @@ console.log(this.state.animValues[item.id]);
   render() {
 
     return (
-      <View style={{height: '100%'}}>
+      <View >
         <Text>
           test listy {this.state.showIngredients}
         </Text>
