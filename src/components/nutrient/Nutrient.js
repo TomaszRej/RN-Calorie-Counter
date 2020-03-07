@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import ProgressBar from 'src/components/progressBar/ProgressBar';
-
+import ProgressBar from 'src/components/progressBar/ProgressBar'
 
 const Nutrient = ({ label, value, color }) => {
   const [percentage, setPercentage] = useState(value);
