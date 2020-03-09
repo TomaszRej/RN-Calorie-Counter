@@ -3,6 +3,7 @@ import Animated, {Easing} from 'react-native-reanimated';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 
+
 class ProgressBar extends Component {
   constructor(props) {
     super(props);

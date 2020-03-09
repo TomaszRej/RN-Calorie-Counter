@@ -7,21 +7,21 @@ import {styles} from 'src/components/header/styles';
 
 const Header = props => {
 	return (
-		<SafeAreaView>
+		<SafeAreaView style={styles.safeArea}>
 			<View style={styles.headerContainer}>
 				<View>
 					<Text style={{ fontWeight: fontWeights.bold }}>
-						{props.scene.route.name}
+						{props.routeName}
 					</Text>
 				</View>
 				<View style={styles.headerIcons}>
 					<TouchableOpacity
-						onPress={() => props.scene.descriptor.navigation.openDrawer()}>
+						onPress={() => props.onPress()}>
 						<Icon
 							style={styles.headerIcon}
 							name="menu"
 							size={24}
-							color={vars.$progressBarLight}
+							color={vars.$progressBarDark}
 						/>
 					</TouchableOpacity>
 					<TouchableOpacity onPress={() => console.log('bell')}>
@@ -29,7 +29,7 @@ const Header = props => {
 							style={styles.headerIcon}
 							name="bell"
 							size={24}
-							color={vars.$progressBarLight}
+							color={vars.$progressBarDark}
 						/>
 					</TouchableOpacity>
 				</View>

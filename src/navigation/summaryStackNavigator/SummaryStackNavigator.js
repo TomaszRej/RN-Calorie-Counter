@@ -12,7 +12,7 @@ const SummaryStack = () => {
 	return (
 		<SummaryNavigator.Navigator
 			screenOptions={{
-				header: props => <Header {...props} />
+				header: props => <Header {...props} onPress={props.scene.descriptor.navigation.openDrawer} routeName={props.scene.route.name}/>
 			}}>
 			<SummaryNavigator.Screen
 				name={Screens.SUMMARY}
