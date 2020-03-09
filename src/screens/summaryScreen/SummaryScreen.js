@@ -26,7 +26,13 @@ const SummaryScreen = () => {
         <Nutrient color='yellow' label='Carbs' value={percentage}/>
       </View>
 
-      <MealsList/>
+
+      <MealsList
+
+        // containerStyles={{paddingHorizontal: 10}}
+
+      />
+
       {/*<GradientProgressBar percentage={percentage}/>*/}
 
     </View>
