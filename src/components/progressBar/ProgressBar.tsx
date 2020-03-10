@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Animated, { Easing} from 'react-native-reanimated';
+import Animated, { Easing } from 'react-native-reanimated';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { EasingFunction } from 'react-native';
+import { EasingFunction, View } from 'react-native';
 
 
 interface ProgressBarProps {
@@ -46,12 +46,13 @@ class ProgressBar extends Component<ProgressBarProps, ProgressBarState> {
 
 	render() {
     const { color } = this.props;
-    const progressionStyle = { 
-      width: Animated.concat(this.state.transX, '%'), 
-      backgroundColor: color ? color : EStyleSheet.value('$progressBarDark') 
-    }
+    const progressionStyle = { width: Animated.concat(this.state.transX, '%'), backgroundColor: color ? color : EStyleSheet.value('$progressBarDark') };
 		return (
-			<Animated.View	style={{color:'red'}}/>
+      <View style={styles.box}>
+				<Animated.View
+					style={progressionStyle}
+				/>
+      </View>
 		);
 	}
 }
