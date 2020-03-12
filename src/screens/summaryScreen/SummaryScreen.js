@@ -6,7 +6,7 @@ import {Text} from 'src/components/text/Text';
 import Nutrient from 'src/components/nutrient/Nutrient';
 import ProgressBar from 'src/components/progressBar/ProgressBar';
 import GradientProgressBar from 'src/components/circularProgressBar/GradientProgressBar';
-import MealsList from 'src/components/mealsList/MealsList';
+import MealsList from 'src/components/mealsList/MealsList/MealsList';
 import TestComponent from 'src/components/testComponent/testComponent';
 
 
@@ -27,11 +27,7 @@ const SummaryScreen = () => {
       </View>
 
 
-      <MealsList
-
-        // containerStyles={{paddingHorizontal: 10}}
-
-      />
+      <MealsList style={{paddingHorizontal: 15, paddingTop: 30,paddingBottom: 30}}/>
 
       {/*<GradientProgressBar percentage={percentage}/>*/}
 

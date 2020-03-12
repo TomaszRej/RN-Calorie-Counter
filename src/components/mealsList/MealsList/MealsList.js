@@ -4,13 +4,17 @@ import {Text} from 'src/components/text/Text';
 import Animated, {Value, timing, Easing, multiply, concat, divide, add} from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import MealsListItem from 'src/components/mealsList/MealsListItem/MealsListItem';
 
 const dataTest = [
   {
     id: 1,
     mealTitle: 'Breakfaast',
     totalCalories: 300,
-    ingredients: [{id: 1, value: 'a'}, {id: 2, value: 'b'}, {id: 3, value: 'c'},{id: 4, value: 'd'}, {id: 5, value: 'e'}],
+    ingredients: [{id: 1, value: 'a'}, {id: 2, value: 'b'}, {id: 3, value: 'c'}, {id: 4, value: 'd'}, {
+      id: 5,
+      value: 'e',
+    }],
   },
   {
     id: 2,
@@ -39,7 +43,8 @@ class MealsList extends React.Component {
 
     for (const item of dataTest) {
       animValues[item.id] = new Value(0);
-    };
+    }
+    ;
 
 
     this.setState({
@@ -103,7 +108,7 @@ class MealsList extends React.Component {
     // todo animate when item is deleted from ingredients list
     this._config = {
       duration: 400,
-      toValue: 15 * (length -1),
+      toValue: length ===1 ? 0 : 15 * (length - 1),
       easing: Easing.inOut(Easing.ease),
     };
 
@@ -114,7 +119,6 @@ class MealsList extends React.Component {
     });
 
 
-
   }
 
   renderItem = ({item}) => {
@@ -123,22 +127,21 @@ class MealsList extends React.Component {
 
 
     return <>
-      <Animated.View
-        style={[styles.shadow, styles.itemContainer,
-          // {paddingBottom: add(this.state.animValues[item.id], 10)}
-        ]}>
+      <View
+        style={[styles.shadow, styles.itemContainer]}>
         <View style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
+          // borderWidth: 1, borderColor: 'red',
         }}>
-          <View style={{borderWidth: 1, borderColor: 'red', flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row'}}>
             <View>
               <Image
                 style={{width: 50, height: 50}}
 
 
-                source={require('../../assets/images/kanpka1.png')}
+                source={require('../../../assets/images/kanpka1.png')}
               />
 
             </View>
@@ -152,62 +155,41 @@ class MealsList extends React.Component {
             <Icon name="chevron-right" size={30} color="blue"/>
           </TouchableOpacity>
         </View>
+        <MealsListItem values={this.state.animValues} id={item.id} ingredients={item.ingredients} onDelete={(id) => this.handleDeleteIngredient(item.id, id, item.ingredients.length)}/>
+        {/*<Animated.View style={*/}
+        {/*  {*/}
 
-        <Animated.View style={
-          {height:
-            multiply(this.state.animValues[item.id], item.ingredients.length)}
-        }>
+        {/*    height:*/}
+        {/*      multiply(this.state.animValues[item.id], item.ingredients.length),*/}
+        {/*  }*/}
+        {/*}>*/}
 
-          {item.ingredients.map((ingredient) => {
-            return <View
-              style={{
-                backgroundColor: 'orange',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                // width: concat(this.state.animValues[item.id], '%'),
-                // opacity: divide(this.state.animValues[item.id], 100),
-              }}>
-              <View>
-                <Text>{ingredient.value}</Text>
-                <Text>{ingredient.id}</Text>
-              </View>
+        {/*  {item.ingredients.map((ingredient, index) => {*/}
+        {/*    return <View*/}
+        {/*      style={{*/}
+        {/*        backgroundColor: index % 2 === 0 ? EStyleSheet.value('$gray'):EStyleSheet.value('$white')  ,*/}
+        {/*        flexDirection: 'row',*/}
+        {/*        justifyContent: 'space-between',*/}
+        {/*        alignItems: 'center',*/}
+        {/*        // width: concat(this.state.animValues[item.id], '%'),*/}
+        {/*        // opacity: divide(this.state.animValues[item.id], 100),*/}
+        {/*      }}>*/}
+        {/*      <View>*/}
+        {/*        <Text>{ingredient.value}</Text>*/}
+        {/*        <Text>{ingredient.id}</Text>*/}
+        {/*      </View>*/}
 
-              <TouchableOpacity onPress={() => this.handleDeleteIngredient(item.id, ingredient.id, item.ingredients.length)}>
-                <Icon name="close" size={30} color="blue"/>
-              </TouchableOpacity>
-            </View>;
-          })}
+        {/*      <TouchableOpacity*/}
+        {/*        onPress={() => this.handleDeleteIngredient(item.id, ingredient.id, item.ingredients.length)}>*/}
+        {/*        <Icon name="close" size={30} color="blue"/>*/}
+        {/*      </TouchableOpacity>*/}
+        {/*    </View>;*/}
+        {/*  })}*/}
 
-        </Animated.View>
+        {/*</Animated.View>*/}
 
-        {/*<View>{item.ingredients.map((ingredient) => {*/}
-        {/*  return <Animated.View style={{*/}
-        {/*    backgroundColor: 'orange',*/}
-        {/*    width: concat(this.state.animValues[item.id], '%'),*/}
-        {/*    opacity: divide(this.state.animValues[item.id], 100),*/}
-        {/*  }}><Text>{ingredient}</Text></Animated.View>;*/}
-        {/*})}*/}
 
-        {/*</View>*/}
-
-      </Animated.View>
-
-      {/*<Animated.View style={{backgroundColor: 'pink', height: concat(this.state.animValues[item.id], '%')}}>*/}
-      {/*  <Text>this.state.showIngredients {item.id}</Text>*/}
-
-      {/*  <View>{item.ingredients.map((ingredient) => {*/}
-      {/*    return <Animated.View style={{*/}
-      {/*      backgroundColor: 'orange',*/}
-      {/*      width: concat(this.state.animValues[item.id], '%'),*/}
-      {/*      opacity: divide(this.state.animValues[item.id], 100),*/}
-      {/*    }}><Text>{ingredient}</Text></Animated.View>;*/}
-      {/*  })}*/}
-
-      {/*  </View>*/}
-
-      {/*</Animated.View>*/}
-
+      </View>
 
     </>;
     ;
@@ -215,15 +197,10 @@ class MealsList extends React.Component {
 
 
   render() {
-    const {containerStyles} = this.props;
+    const {style} = this.props;
 
     return (
-      <View style={{...containerStyles}}>
-        <Text>
-          test listy {this.state.showIngredients}
-        </Text>
-        <FlatList extraData={this.state} data={dataTest} renderItem={item => this.renderItem(item)}/>
-      </View>
+        <FlatList style={{...style}} data={dataTest} renderItem={item => this.renderItem(item)}/>
     );
   }
 }
@@ -243,11 +220,11 @@ const styles = EStyleSheet.create({
 
   itemContainer: {
 
-    padding: 10,
+
     backgroundColor: '$white',
     borderRadius: 10,
-    //paddingHorizontal: 10,
-    marginHorizontal: 10,
+
+    //marginHorizontal: 10,
     marginBottom: 10,
   }
   ,
