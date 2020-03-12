@@ -34,6 +34,7 @@ class MealsList extends React.Component {
       isIngredientsListOpen: false,
       anim: new Value(0),
       animValues: {},
+      animatedOpenValues: {},
       data: [],
 
     };
@@ -41,34 +42,38 @@ class MealsList extends React.Component {
 
   componentDidMount() {
     let animValues = {};
+    let animatedOpenValues = {};
 
     for (const item of dataTest) {
       animValues[item.id] = new Value(0);
+
+      animatedOpenValues[item.id] = {value: new Value(0) , isOpen: false};
     }
-    ;
 
 
     this.setState({
       animValues: animValues,
+      animatedOpenValues: animatedOpenValues,
       data: dataTest,
     });
   }
 
-  toggleShow() {
+  toggleShow(id, length) {
 
-    console.log('this.state.showIngredients');
-    console.log(this.state.showIngredients);
+    const newAnimatedOpenValues = {...this.state.animatedOpenValues};
+    newAnimatedOpenValues[id].isOpen = !newAnimatedOpenValues[id].isOpen;
+
     let value;
     this.setState({
-      isIngredientsListOpen: !this.state.isIngredientsListOpen,
+      animatedOpenValues: newAnimatedOpenValues
     }, () => {
       const config = {
         duration: 250,
-        toValue: this.state.isIngredientsListOpen === true ? 0 : 1,
+        toValue: this.state.animatedOpenValues[id].isOpen ? 1 :0,
         easing: Easing.inOut(Easing.ease),
       };
 
-      timing(this.state.showIngredients, config).start();
+      timing(this.state.animatedOpenValues[id].value, config).start();
     });
 
 
@@ -77,7 +82,7 @@ class MealsList extends React.Component {
 
   handleOnPress = (item) => {
 
-    this.toggleShow();
+    this.toggleShow(item.id, item.ingredients.length);
 
 
     // console.log(this.state.showIngredients, item.id);
@@ -181,7 +186,7 @@ class MealsList extends React.Component {
             <Icon name="chevron-right" size={30} color="blue"/>
           </TouchableOpacity>
         </View>
-        <IngredientsList animatedShowValue={this.state.showIngredients} values={this.state.animValues} id={item.id}
+        <IngredientsList animatedShowValue={this.state.animatedOpenValues[item.id]?.value} values={this.state.animValues} id={item.id}
                          ingredients={item.ingredients}
                          onDelete={(id) => this.handleDeleteIngredient(item.id, id, item.ingredients.length)}/>
         {/*<Animated.View style={*/}

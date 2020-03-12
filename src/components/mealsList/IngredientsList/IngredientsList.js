@@ -22,7 +22,7 @@ const IngredientsList = ({ingredients, onDelete, values, id, animatedShowValue})
     <Animated.View style={
       {
 
-        height: animatedShowValue.interpolate({
+        height: animatedShowValue?.interpolate({
           inputRange: [0, 1],
           outputRange: [0, ITEM_HEIGHT * ingredients.length],
 
