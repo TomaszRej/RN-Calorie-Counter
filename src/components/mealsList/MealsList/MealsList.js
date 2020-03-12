@@ -4,7 +4,7 @@ import {Text} from 'src/components/text/Text';
 import Animated, {Value, timing, Easing, multiply, concat, divide, add} from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import MealsListItem from 'src/components/mealsList/MealsListItem/MealsListItem';
+import IngredientsList from 'src/components/mealsList/IngredientsList/IngredientsList';
 
 const dataTest = [
   {
@@ -30,7 +30,8 @@ class MealsList extends React.Component {
     super(props);
 
     this.state = {
-      showIngredients: 0,
+      showIngredients: new Value(0),
+      isIngredientsListOpen: false,
       anim: new Value(0),
       animValues: {},
       data: [],
@@ -53,20 +54,45 @@ class MealsList extends React.Component {
     });
   }
 
-  handleOnPress = (item) => {
-    console.log(this.state.showIngredients, item.id);
+  toggleShow() {
 
+    console.log('this.state.showIngredients');
+    console.log(this.state.showIngredients);
+    let value;
+    this.setState({
+      isIngredientsListOpen: !this.state.isIngredientsListOpen,
+    }, () => {
+      const config = {
+        duration: 250,
+        toValue: this.state.isIngredientsListOpen === true ? 0 : 1,
+        easing: Easing.inOut(Easing.ease),
+      };
 
-    if (this.state.showIngredients == item.id) {
-      this.setState({showIngredients: 0}, () => {
-        this.animationUp(item.id, item.ingredients.length);
-      });
-
-      return;
-    }
-    this.setState({showIngredients: item.id}, () => {
-      this.animationDown(item.id, item.ingredients.length);
+      timing(this.state.showIngredients, config).start();
     });
+
+
+
+  }
+
+  handleOnPress = (item) => {
+
+    this.toggleShow();
+
+
+    // console.log(this.state.showIngredients, item.id);
+    //
+    //
+    // if (this.state.showIngredients == item.id) {
+    //   this.setState({showIngredients: 0}, () => {
+    //     this.animationUp(item.id, item.ingredients.length);
+    //   });
+    //
+    //   return;
+    // }
+    // this.setState({showIngredients: item.id}, () => {
+    //   this.animationDown(item.id, item.ingredients.length);
+    // });
 
 
   };
@@ -108,7 +134,7 @@ class MealsList extends React.Component {
     // todo animate when item is deleted from ingredients list
     this._config = {
       duration: 400,
-      toValue: length ===1 ? 0 : 15 * (length - 1),
+      toValue: length === 1 ? 0 : 30 * (length - 1),
       easing: Easing.inOut(Easing.ease),
     };
 
@@ -135,7 +161,7 @@ class MealsList extends React.Component {
           alignItems: 'center',
           // borderWidth: 1, borderColor: 'red',
         }}>
-          <View style={{ flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row'}}>
             <View>
               <Image
                 style={{width: 50, height: 50}}
@@ -155,7 +181,9 @@ class MealsList extends React.Component {
             <Icon name="chevron-right" size={30} color="blue"/>
           </TouchableOpacity>
         </View>
-        <MealsListItem values={this.state.animValues} id={item.id} ingredients={item.ingredients} onDelete={(id) => this.handleDeleteIngredient(item.id, id, item.ingredients.length)}/>
+        <IngredientsList animatedShowValue={this.state.showIngredients} values={this.state.animValues} id={item.id}
+                         ingredients={item.ingredients}
+                         onDelete={(id) => this.handleDeleteIngredient(item.id, id, item.ingredients.length)}/>
         {/*<Animated.View style={*/}
         {/*  {*/}
 
@@ -200,7 +228,7 @@ class MealsList extends React.Component {
     const {style} = this.props;
 
     return (
-        <FlatList style={{...style}} data={dataTest} renderItem={item => this.renderItem(item)}/>
+      <FlatList style={{...style}} data={dataTest} renderItem={item => this.renderItem(item)}/>
     );
   }
 }
