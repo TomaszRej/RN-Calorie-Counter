@@ -1,60 +1,44 @@
-import React,  {useState, useEffect, useRef} from 'react';
-import {Transitioning, Transition} from 'react-native-reanimated';
+import React, {Component, useState, useEffect, useRef} from 'react';
+import Animated, {Easing, timing, Value} from 'react-native-reanimated';
 import {TouchableOpacity, View} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import {Text} from '../../text/Text';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const IngredientsListItem = ({index, ingredient, onDelete}) => {
-  const transition = <Transition.Change interpolation="easeInOut"/>;
 
-  const [p, setP] = useState(0);
-  const ref = useRef();
+const ITEM_HEIGHT = 50;
 
-
-  useEffect(() => {
-    console.log('start')
-    debugger
-
-
-    return () => {
-      console.log('animation');
-      debugger
-    }
-  }, []);
+const IngredientsListItem = ({index, ingredient, animatedShowValue, id, onDelete, animatedState}) => {
 
   const handleDelete = (id) => {
-    onDelete(id);
-    console.log("delet")
+    typeof onDelete === 'function' && onDelete(id);
   };
 
+
   return (
-
-    <Transitioning.View
-      transition={transition}
-      ref={ref}
-      style={{
-        backgroundColor: index % 2 === 0 ? EStyleSheet.value('$gray') : EStyleSheet.value('$white'),
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-
-        height: 50,
-        borderStyle: 'dashed',
-
-        // width: concat(this.state.animValues[item.id], '%'),
-        // opacity: divide(this.state.animValues[item.id], 100),
-      }}>
-      <View>
-        <Text>{ingredient.value}</Text>
-        <Text>{ingredient.id}</Text>
-      </View>
-
-      <TouchableOpacity
-        onPress={() => handleDelete(ingredient.id)}>
-        <Icon name="close" size={30} color="blue"/>
-      </TouchableOpacity>
-    </Transitioning.View>
+    <View style={{backgroundColor: index % 2 === 0 ? EStyleSheet.value('$lightGray') : EStyleSheet.value('$white')}}>
+      <Animated.View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          height: animatedState[id]?.ingredients[ingredient.id]?.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, ITEM_HEIGHT],
+          }),
+        }}>
+        <View>
+          <Text>{ingredient?.value}</Text>
+          <Text>{ingredient?.id}</Text>
+        </View>
+        <TouchableOpacity
+          onPress={() => handleDelete(ingredient.id)}>
+          <Icon name="close" size={30} color="blue"/>
+        </TouchableOpacity>
+      </Animated.View>
+    </View>
   );
 };
 
 export default IngredientsListItem;
+

@@ -10,6 +10,24 @@ import MealsList from 'src/components/mealsList/MealsList/MealsList';
 import TestComponent from 'src/components/testComponent/testComponent';
 
 
+const dataTest = [
+  {
+    id: 1,
+    mealTitle: 'Breakfaast',
+    totalCalories: 300,
+    ingredients: [{id: 1, value: 'a'}, {id: 2, value: 'b'}, {id: 3, value: 'c'}, {id: 4, value: 'd'}, {
+      id: 5,
+      value: 'e',
+    }],
+  },
+  {
+    id: 2,
+    mealTitle: 'Dinner',
+    totalCalories: 500,
+    ingredients: [{id: 1, value: 'a'}, {id: 2, value: 'b'}],
+  },
+];
+
 const SummaryScreen = () => {
 
   const [percentage, setPercentage] = useState(10);
@@ -27,7 +45,7 @@ const SummaryScreen = () => {
       </View>
 
 
-      <MealsList style={{paddingHorizontal: 15, paddingTop: 30,paddingBottom: 30}}/>
+      <MealsList data={dataTest} style={{paddingHorizontal: 15, paddingTop: 30,paddingBottom: 30}}/>
 
       {/*<GradientProgressBar percentage={percentage}/>*/}
 
