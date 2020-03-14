@@ -2,6 +2,8 @@ import {View} from 'react-native';
 
 export const Easing = {inOut: jest.fn()};
 
+export const Transition = {change: jest.fn()};
+
 export default {
   Value: jest.fn(() => 10),
   event: jest.fn(),
@@ -18,6 +20,7 @@ export default {
       start: jest.fn(),
     };
   },
+
 };
 
 

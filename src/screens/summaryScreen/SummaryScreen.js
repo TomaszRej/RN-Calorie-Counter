@@ -6,8 +6,7 @@ import {Text} from 'src/components/text/Text';
 import Nutrient from 'src/components/nutrient/Nutrient';
 import ProgressBar from 'src/components/progressBar/ProgressBar';
 import GradientProgressBar from 'src/components/circularProgressBar/GradientProgressBar';
-
-import MealsList from 'src/components/mealsList/MealsList';
+import MealsList from 'src/components/mealsList/MealsList/MealsList';
 import TestComponent from 'src/components/testComponent/testComponent';
 
 
@@ -33,12 +32,9 @@ const SummaryScreen = () => {
 
   const [percentage, setPercentage] = useState(10);
 
-
   return (
-    <View>
+    <View >
       <Button title={'add +10'} onPress={() => setPercentage(p => p + 10)}/>
-
-
       {/*<Text weight={'bold'} size={'h1'}>Summary screen</Text>*/}
       {/*<Text align={'center'} textType={'italic'}>Summary screen</Text>*/}
       {/*<Icon name="dots-vertical" size={30} color="red"/>*/}
