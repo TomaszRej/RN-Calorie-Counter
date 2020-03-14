@@ -73,7 +73,7 @@ class MealsList extends React.Component {
     });
 
     this._config = {
-      duration: 250,
+      duration: 260,
       toValue: 0,
       easing: Easing.inOut(Easing.ease),
     };
