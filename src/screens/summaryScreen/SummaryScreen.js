@@ -3,7 +3,7 @@ import {View, Button} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Text} from 'src/components/text/Text';
-import Nutrient from 'src/components/nutrient/Nutrient';
+import Nutrient from 'src/components/nutrient/Nutrient.tsx';
 import ProgressBar from 'src/components/progressBar/ProgressBar';
 import GradientProgressBar from 'src/components/circularProgressBar/GradientProgressBar';
 import MealsList from 'src/components/mealsList/MealsList/MealsList';

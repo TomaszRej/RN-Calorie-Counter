@@ -27,7 +27,7 @@
     </package>
     <package name="components.nutrient">
       <metrics statements="12" coveredstatements="10" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="1"/>
-      <file name="Nutrient.js" path="/Users/raf/Desktop/RN-Calorie-Counter/src/components/nutrient/Nutrient.js">
+      <file name="Nutrient.tsx" path="/Users/raf/Desktop/RN-Calorie-Counter/src/components/nutrient/Nutrient.tsx">
         <metrics statements="12" coveredstatements="10" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>

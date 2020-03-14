@@ -37,7 +37,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:src/components/nutrient/Nutrient.js
+SF:src/components/nutrient/Nutrient.tsx
 FN:6,Nutrient
 FN:9,(anonymous_1)
 FNF:2
