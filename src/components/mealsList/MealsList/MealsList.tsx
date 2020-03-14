@@ -38,6 +38,7 @@ class MealsList extends React.Component {
     this.setState({
       animatedOpenValues: animatedOpenValues,
       data: this.props.data
+
     });
   }
 
