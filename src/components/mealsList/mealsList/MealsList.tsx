@@ -1,46 +1,59 @@
 import React from 'react';
-import {FlatList, TouchableOpacity, View, Image} from 'react-native';
+import {
+  FlatList,
+  TouchableOpacity,
+  View,
+  Image,
+  ListRenderItemInfo,
+} from 'react-native';
 // @ts-ignore
 import {Text} from 'components/text/Text';
-import Animated, {Value, timing, Easing, multiply, sub, concat, divide, add} from 'react-native-reanimated';
+import Animated, {
+  Value,
+  timing,
+  Easing,
+  multiply,
+  sub,
+  concat,
+  divide,
+  add,
+} from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import EStyleSheet from 'react-native-extended-stylesheet';
 // @ts-ignore
-import IngredientsList from 'components/mealsList/IngredientsList/IngredientsList';
-
-
-
+import IngredientsList from 'components/mealsList/ingredientsList/IngredientsList';
+// @ts-ignore
+import MealsListItem from 'components/mealsList/mealsListItem/MealsListItem.tsx';
 
 interface Meal {
-    id: number,
-    mealTitle: string,
-    totalCalories: number,
-    ingredients: {id: number, value: string}[],
+  id: number;
+  mealTitle: string;
+  totalCalories: number;
+  ingredients: {id: number; value: string}[];
 }
 
-interface Ingredients {
-    [id: number]: Animated.Value<number>
+interface IngredientValue {
+  [id: number]: Animated.Value<number>;
 }
 
 interface AnimatedOpenValue {
-    [id: number]: {
-        value: Animated.Value<number>,
-        isOpen: boolean,
-        ingredients: {[id: number]: Animated.Value<number>}[]
-        initialLength: number
-    }
+  [id: number]: {
+    value: Animated.Value<number>;
+    isOpen: boolean;
+    ingredients: IngredientValue[] | object;
+    initialLength: number;
+  };
 }
 
 interface MealsListProps {
-    data: { id: number, ingredients: [{ id: number }] }[];
-    style: object;
+  data: {id: number; ingredients: [{id: number}]}[];
+  style: object;
 }
 
 interface MealsListState {
-    animatedOpenValues: AnimatedOpenValue,
-    data: object[]
+  animatedOpenValues: AnimatedOpenValue;
+  data: object[];
 }
-
 
 class MealsList extends React.Component<MealsListProps, MealsListState> {
   constructor(props: MealsListProps) {
@@ -52,12 +65,11 @@ class MealsList extends React.Component<MealsListProps, MealsListState> {
     };
   }
 
-
   componentDidMount() {
     let animatedOpenValues: AnimatedOpenValue = {};
 
     for (const item of this.props.data) {
-      const ingredients: Ingredients = {};
+      const ingredients: IngredientValue = {};
       for (const ingredient of item.ingredients) {
         ingredients[ingredient.id] = new Value(1);
       }
@@ -72,8 +84,7 @@ class MealsList extends React.Component<MealsListProps, MealsListState> {
 
     this.setState({
       animatedOpenValues: animatedOpenValues,
-      data: this.props.data
-
+      data: this.props.data,
     });
   }
 
@@ -81,29 +92,33 @@ class MealsList extends React.Component<MealsListProps, MealsListState> {
     const newAnimatedOpenValues = {...this.state.animatedOpenValues};
     newAnimatedOpenValues[id].isOpen = !newAnimatedOpenValues[id].isOpen;
 
-    this.setState({
-      animatedOpenValues: newAnimatedOpenValues,
-    }, () => {
-      const config = {
-        duration: 250,
-        toValue: this.state.animatedOpenValues[id].isOpen ? 1 : 0,
-        easing: Easing.inOut(Easing.ease),
-      };
+    this.setState(
+      {
+        animatedOpenValues: newAnimatedOpenValues,
+      },
+      () => {
+        const config = {
+          duration: 250,
+          toValue: this.state.animatedOpenValues[id].isOpen ? 1 : 0,
+          easing: Easing.inOut(Easing.ease),
+        };
 
-      timing(this.state.animatedOpenValues[id].value, config).start();
-    });
+        timing(this.state.animatedOpenValues[id].value, config).start();
+      },
+    );
   }
 
-  handleOnPress = (item) => {
+  handleOnPress = (item: Meal) => {
     this.toggleShow(item.id);
   };
-
 
   handleDeleteIngredient(itemId, ingredientId, length) {
     const meals = [...this.state.data];
     const newData = meals.map(item => {
       if (item.id === itemId) {
-        item.ingredients = item.ingredients.filter(ingredient => ingredient.id !== ingredientId);
+        item.ingredients = item.ingredients.filter(
+          ingredient => ingredient.id !== ingredientId,
+        );
       }
       return item;
     });
@@ -114,95 +129,81 @@ class MealsList extends React.Component<MealsListProps, MealsListState> {
       easing: Easing.inOut(Easing.ease),
     };
 
-    timing(this.state.animatedOpenValues[itemId].ingredients[ingredientId], this._config).start();
-
+    timing(
+      this.state.animatedOpenValues[itemId].ingredients[ingredientId],
+      this._config,
+    ).start();
 
     const initLength = this.state.animatedOpenValues[itemId].initialLength;
 
     this._config2 = {
       duration: 250,
-      toValue: 1 - ((1 / initLength) * (initLength - (length - 1))),
+      toValue: 1 - (1 / initLength) * (initLength - (length - 1)),
       easing: Easing.inOut(Easing.ease),
     };
 
-    timing(this.state.animatedOpenValues[itemId].value, this._config2).start(() => {
-
-      // this.setState({
-      //   data: newData,
-      // });
-    });
-
-
+    timing(this.state.animatedOpenValues[itemId].value, this._config2).start(
+      () => {
+        // this.setState({
+        //   data: newData,
+        // });
+      },
+    );
   }
 
-  renderItem = ({item}) => {
+  renderItem = (element: ListRenderItemInfo<any>) => {
+    const {item} = element;
 
-    return <>
-      <View
-        style={[styles.shadow, styles.itemContainer]}>
-        <View style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}>
-          <View style={{flexDirection: 'row'}}>
-            <View>
-              <Image
-                style={{width: 50, height: 50}}
-                source={require('../../../assets/images/kanpka1.png')}
-              />
-            </View>
-
-            <TouchableOpacity onPress={() => this.handleOnPress(item)}>
-              <Text>'test element listy'{item.id}</Text>
-            </TouchableOpacity>
-          </View>
-
-          <TouchableOpacity onPress={() => alert('alert ikana wcisnieta')}>
-            <Icon name="chevron-right" size={30} color="blue"/>
-          </TouchableOpacity>
-        </View>
-        <IngredientsList animatedShowValue={this.state.animatedOpenValues[item.id]?.value}
-                         animatedState={this.state.animatedOpenValues}
-                         id={item?.id}
-                         ingredients={item?.ingredients}
-                         onDelete={(id: number) => this.handleDeleteIngredient(item.id, id, item.ingredients.length)}/>
-      </View>
-    </>;
+    return (
+      <MealsListItem
+        onShowInnerList={() => this.handleOnPress(item)}
+        item={item}>
+        <IngredientsList
+          animatedShowValue={this.state.animatedOpenValues[item.id]?.value}
+          animatedState={this.state.animatedOpenValues}
+          id={item.id}
+          ingredients={item.ingredients}
+          onDelete={(id: number) =>
+            this.handleDeleteIngredient(item.id, id, item.ingredients.length)
+          }
+        />
+      </MealsListItem>
+    );
   };
-
 
   render() {
     const {style, data} = this.props;
 
     return (
-      <FlatList style={{...style}} data={data} renderItem={item => this.renderItem(item)}/>
+      <FlatList
+        style={{...style}}
+        data={data}
+        renderItem={item => this.renderItem(item)}
+      />
     );
   }
 }
 
-
-const styles = EStyleSheet.create({
-  shadow: {
-    shadowColor: '$black',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  itemContainer: {
-    backgroundColor: '$white',
-    borderRadius: 10,
-    overflow: 'hidden',
-    marginBottom: 10,
-  },
-});
+// const styles = EStyleSheet.create({
+//   shadow: {
+//     shadowColor: '$black',
+//     shadowOffset: {
+//       width: 0,
+//       height: 2,
+//     },
+//     shadowOpacity: 0.25,
+//     shadowRadius: 3.84,
+//     elevation: 5,
+//   },
+//   itemContainer: {
+//     backgroundColor: '$white',
+//     borderRadius: 10,
+//     overflow: 'hidden',
+//     marginBottom: 10,
+//   },
+// });
 
 export default MealsList;
-
 
 // import React from 'react';
 // import {FlatList, TouchableOpacity, View, Image, ListRenderItemInfo} from 'react-native';
@@ -212,7 +213,7 @@ export default MealsList;
 // import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 // import EStyleSheet from 'react-native-extended-stylesheet';
 // // @ts-ignore
-// import IngredientsList from 'src/components/mealsList/IngredientsList/IngredientsList';
+// import ingredientsList from 'src/components/mealsList/ingredientsList/ingredientsList';
 //
 // interface Meal {
 //     id: number,
@@ -244,7 +245,7 @@ export default MealsList;
 //     data: object[]
 // }
 //
-// class MealsList extends React.Component<MealsListProps, MealsListState> {
+// class mealsList extends React.Component<MealsListProps, MealsListState> {
 //     constructor(props: MealsListProps) {
 //         super(props);
 //
@@ -371,7 +372,7 @@ export default MealsList;
 //                         <Icon name="chevron-right" size={30} color="blue"/>
 //                     </TouchableOpacity>
 //                 </View>
-//                 <IngredientsList animatedShowValue={this.state.animatedOpenValues[item.id]?.value}
+//                 <ingredientsList animatedShowValue={this.state.animatedOpenValues[item.id]?.value}
 //                                  animatedState={this.state.animatedOpenValues}
 //                                  id={item?.id}
 //                                  ingredients={item?.ingredients}
@@ -410,5 +411,4 @@ export default MealsList;
 //     },
 // });
 //
-// export default MealsList;
-
+// export default mealsList;

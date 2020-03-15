@@ -6,7 +6,7 @@ import {Text} from 'src/components/text/Text';
 import Nutrient from 'src/components/nutrient/Nutrient';
 import ProgressBar from 'src/components/progressBar/ProgressBar';
 import GradientProgressBar from 'src/components/circularProgressBar/GradientProgressBar';
-import MealsList from 'src/components/mealsList/MealsList/MealsList';
+import MealsList from 'src/components/mealsList/mealsList/MealsList';
 import TestComponent from 'src/components/testComponent/testComponent';
 
 

@@ -2,7 +2,7 @@ import React from 'react';
 import Animated from 'react-native-reanimated';
 
 
-import IngredientsListItem from 'src/components/mealsList/IngredientsListItem/IngredientsListItem';
+import IngredientsListItem from 'src/components/mealsList/ingredientsListItem/IngredientsListItem';
 
 const ITEM_HEIGHT = 50;
 
