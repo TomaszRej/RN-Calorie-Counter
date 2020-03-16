@@ -12,11 +12,7 @@ import Animated, {
   Value,
   timing,
   Easing,
-  multiply,
-  sub,
-  concat,
-  divide,
-  add,
+
 } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -75,6 +71,7 @@ class MealsList extends React.Component<MealsListProps, MealsListState> {
         ingredients[ingredient.id] = new Value(1);
       }
 
+
       animatedOpenValues[item.id] = {
         value: new Value(0),
         isOpen: false,
@@ -130,26 +127,26 @@ class MealsList extends React.Component<MealsListProps, MealsListState> {
       easing: Easing.inOut(Easing.ease),
     };
 
-    timing(
-      this.state.animatedOpenValues[itemId].ingredients[ingredientId],
-      config,
-    ).start();
-
     const initLength = this.state.animatedOpenValues[itemId].initialLength;
-
     const config2 = {
       duration: 250,
       toValue: 1 - (1 / initLength) * (initLength - (length - 1)),
       easing: Easing.inOut(Easing.ease),
     };
 
-    timing(this.state.animatedOpenValues[itemId].value, config2).start(
-      () => {
-        // this.setState({
-        //   data: newData,
-        // });
-      },
-    );
+      timing(
+          this.state.animatedOpenValues[itemId].ingredients[ingredientId],
+          config,
+      ).start();
+
+      timing(this.state.animatedOpenValues[itemId].value, config2).start(
+          () => {
+            // this.setState({
+            //   data: newData,
+            // });
+          },
+      );
+
   }
 
   renderItem = (element: ListRenderItemInfo<any>) => {

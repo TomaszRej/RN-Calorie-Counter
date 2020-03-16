@@ -6,7 +6,7 @@ export const vars = {
   $gray: 'gray',
 
   $lightGray: '#FCFCFC',
-$borderGray: '#F6F6F6',
+  $borderGray: '#F6F6F6',
   $primary: '#35A63A',
 
   $progressBarLight: '#6DEA92',
