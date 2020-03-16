@@ -60,3 +60,6 @@ buck-out/
 
 # tests
 coverage/
+
+#vscode settings
+.vscode/settings.json
