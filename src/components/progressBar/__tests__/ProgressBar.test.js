@@ -9,9 +9,6 @@ describe('progress bar', () => {
     const component = shallow(<ProgressBar/>);
     component.setState({transX: 10});
 
-    const item = component.find({style: [undefined, {width: '10%'}]});
-
-    //expect(item).toHaveLength(1);
     expect(component.props().style).toContainEqual({width: '10%'});
   });
 

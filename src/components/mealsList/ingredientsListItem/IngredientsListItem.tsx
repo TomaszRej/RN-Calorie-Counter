@@ -32,6 +32,8 @@ const IngredientsListItem: React.FC<IngredientsListItemProps> = ({
   onDelete,
   animatedState,
 }) => {
+    
+    
   const handleDelete = (id: number) => {
     typeof onDelete === 'function' && onDelete(id);
   };
