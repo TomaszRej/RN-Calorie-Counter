@@ -28,12 +28,39 @@ const dataTest = [
   },
 ];
 
+import Svg, { Path } from "react-native-svg"
+
+function SvgComponent(props) {
+  return (
+    <Svg
+      viewBox="0 0 1143 584"
+      fillRule="evenodd"
+      clipRule="evenodd"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeMiterlimit={1.5}
+      {...props}
+    >
+      <Path
+        d="M7.292 212.647c136.31 0 340.775-52.4 408.93 0 68.155 52.4-75.85 261.98 0 314.38 75.85 52.4 379.253 78.66 455.103 0 75.84-78.66-40.98-393.3 0-471.961 37.86-72.689 204.9-54.03 245.88 0 40.98 54.031 0 216.121 0 324.181"
+        fill="none"
+        stroke="#000"
+        strokeWidth={14.58}
+      />
+    </Svg>
+  )
+}
+
+
+
 const SummaryScreen = () => {
 
   const [percentage, setPercentage] = useState(10);
 
   return (
     <View >
+
+      <SvgComponent style={{width: 300, height: 300}}/>
       <Button title={'add +10'} onPress={() => setPercentage(p => p + 10)}/>
       {/*<Text weight={'bold'} size={'h1'}>Summary screen</Text>*/}
       {/*<Text align={'center'} textType={'italic'}>Summary screen</Text>*/}
@@ -43,6 +70,7 @@ const SummaryScreen = () => {
         <Nutrient color='blue' label='Fats' value={percentage}/>
         <Nutrient color='yellow' label='Carbs' value={percentage}/>
       </View>
+
 
 
       <MealsList data={dataTest} style={{paddingHorizontal: 15, paddingTop: 30,paddingBottom: 30}}/>
