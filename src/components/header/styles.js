@@ -12,12 +12,7 @@ export const styles = EStyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     shadowColor: '#000',
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 1
-    // },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 2,
+
     backgroundColor: '$bgColor'
   },
   headerIcons: {

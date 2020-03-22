@@ -2,9 +2,6 @@ import React from 'react';
 import {
 	View,
 	Text,
-	Button,
-	SafeAreaView,
-	TouchableOpacity
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
@@ -13,37 +10,33 @@ import {
 	DrawerItemList,
 	DrawerItem
 } from '@react-navigation/drawer';
-
 import Screens from 'src/navigation/screens';
-import SummaryStack from 'src/navigation/summaryStackNavigator/SummaryStackNavigator';
+import {styles} from 'src/navigation/drawerNavigator/styles';
 
 const DrawerNavigator = createDrawerNavigator();
 
 function CustomDrawerContent(props) {
+	debugger
 	return (
-		<DrawerContentScrollView {...props}>
-			{/*<DrawerItemList {...props} />*/}
+		<DrawerContentScrollView 
+		{...props}>
 			<Text> avatar</Text>
-			<DrawerItem
-				// icon={() => }
-				label={({ focused }) =>
-					<View
-						style={{
-							flexDirection: 'row',
-							width: '85%',
-							justifyContent: 'space-between',
-							alignItems: 'center'
-						}}>
-						<View>
-							<Text>Summary</Text>
-						</View>
-						<View>
-							<Icon name="chevron-right" size={30} color="blue" />
-						</View>
-					</View>}
-				onPress={() => props.navigation.navigate('Summary')}
-				style={{ backgroundColor: 'red' }}
-			/>
+			{props.state.routes.map(route=>{
+				props.navigation
+			return (
+				<DrawerItem
+					label={({ focused }) =>
+							<View 
+								style={styles.drawerItemContainer}>
+								<Text>{route.name}</Text>
+								<Icon name="chevron-right" size={30} color="green" />
+							</View>
+							}
+					onPress={() => props.navigation.navigate(props.state.routeNames[props.state.routes.indexOf(route)])}
+				/>
+			)
+			}
+			)}
 		</DrawerContentScrollView>
 	);
 }
@@ -51,14 +44,23 @@ function CustomDrawerContent(props) {
 export const MainDrawerNavigator = () => {
 	return (
 		<DrawerNavigator.Navigator
-			initialRouteName={Screens.SUMMARY}
-			// screenOption={{}}
+			initialRouteName={Screens.SUMMARY.title}
 			drawerPosition="right"
-			drawerStyle={{
-				width: '85%'
-			}}
-			drawerContent={props => <CustomDrawerContent {...props} />}>
-			<DrawerNavigator.Screen name={Screens.SUMMARY} component={SummaryStack} />
+			drawerWidth={'85%'}
+			drawerContent={props => <CustomDrawerContent {...props} />}
+			>
+			{Object.values(Screens).map(el=>{
+				console.log(el.title)
+				return(
+					<DrawerNavigator.Screen
+						name={el.title} 
+						component={el.component ?? EmptyComponent} 
+					/>
+				)
+				})}
 		</DrawerNavigator.Navigator>
 	);
 };
+
+const EmptyComponent = () => <View><Text>No component</Text></View>
+
